@@ -16,18 +16,17 @@ export const fetchCode = (rawUrl: string) => {
         .then((res) => res.body?.getReader())
         .then((reader) => reader?.read())
         .then((data) => data && data.value && new TextDecoder().decode(data.value))
-        .then((data) => data || `ERROR: Code not found at ${rawUrl}`)
 }
 
 export const fetchTaggedCode = (rawUrl: string, tag: string) =>
     fetchCode(rawUrl).then(extractTaggedCode(tag))
 
 const cutOnEndTag = (tag: string) => (text: string) =>
-    text.substr(0, text.indexOf(`// [[end:${tag}]]`))
+    text.substr(0, text.indexOf(`// [[end:${tag}]]`)).trim() // TODO: extract comment prefix into parameter
 
 const extractTaggedCode = (tag: string) => (text: string | undefined = '') => {
     return text
-        .split(`// [[start:${tag}]]`)
+        .split(`// [[start:${tag}]]`) // TODO: extract comment prefix into parameter
         .slice(1)
         .map(cutOnEndTag(tag))
         .join('\n\n// [...]\n\n')
@@ -38,13 +37,7 @@ Prism.hooks.add('before-sanity-check', (env) => {
     env.code = (env.element as HTMLElement).innerText;
 });
 
-
-
 const params = new URLSearchParams(window.location.search);
-
-
-
-
 const spec = {
     url: params.get('url')?.replace('github.com', 'raw.githubusercontent.com').replace('blob/', '') || '',
     lang: params.get('lang'),
