@@ -1,9 +1,13 @@
 import Prism from 'prismjs'
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-markdown';
+import 'prismjs/components/prism-diff';
 import 'prismjs/themes/prism-solarizedlight.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.min'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+import 'prismjs/plugins/line-highlight/prism-line-highlight.min'
+import 'prismjs/plugins/line-highlight/prism-line-highlight.css'
 
 
 export const fetchCode = (rawUrl: string) => {
@@ -26,22 +30,31 @@ const extractTaggedCode = (tag: string) => (text: string | undefined = '') => {
         .slice(1)
         .map(cutOnEndTag(tag))
         .join('\n\n// [...]\n\n')
-        || `ERROR: Extraction tag ${tag} not found in code`
+        || text
 }
 
 Prism.hooks.add('before-sanity-check', (env) => {
     env.code = (env.element as HTMLElement).innerText;
 });
 
-// complete file
+
+const params = new URLSearchParams(window.location.search);
+
+
+
 
 const spec = {
-    url: 'https://raw.githubusercontent.com/wwerner/bashplate/master/src/index.tsx',
-    lang: 'typescript'
+    url: params.get('url')?.replace('github.com', 'raw.githubusercontent.com').replace('blob/', '') || '',
+    lang: params.get('lang'),
+    tag: params.get('tag'),
+    highlight: params.get('highlight')
 }
-fetchCode(spec.url)
+
+fetchTaggedCode(spec.url)
     .then(src => document.getElementById('src')!.innerText = src)
-    .then(() => document.getElementById('src')?.classList.add(`language-${spec.lang}`))
+    .then(() => document.getElementById('container')?.classList.add(`language-${spec.lang}`))
+    .then(() => { if (spec.highlight) document.getElementById('container')?.classList.add(`line-highlight`) })
+    .then(() => { if (spec.highlight) document.getElementById('container')?.setAttribute('data-line', spec.highlight) })
     .then(() => Prism.highlightAll())
 
     // or with section tag
