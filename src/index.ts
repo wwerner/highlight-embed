@@ -6,8 +6,9 @@ import 'prismjs/components/prism-diff';
 import 'prismjs/themes/prism-solarizedlight.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.min'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
-import 'prismjs/plugins/line-highlight/prism-line-highlight.min'
+import 'prismjs/plugins/line-highlight/prism-line-highlight'
 import 'prismjs/plugins/line-highlight/prism-line-highlight.css'
+import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace'
 
 
 export const fetchCode = (rawUrl: string) => {
@@ -38,6 +39,7 @@ Prism.hooks.add('before-sanity-check', (env) => {
 });
 
 
+
 const params = new URLSearchParams(window.location.search);
 
 
@@ -46,11 +48,11 @@ const params = new URLSearchParams(window.location.search);
 const spec = {
     url: params.get('url')?.replace('github.com', 'raw.githubusercontent.com').replace('blob/', '') || '',
     lang: params.get('lang'),
-    tag: params.get('tag'),
-    highlight: params.get('highlight')
+    tag: params.get('tag') || '',
+    highlight: params.get('highlight'),
 }
 
-fetchTaggedCode(spec.url)
+fetchTaggedCode(spec.url, spec.tag)
     .then(src => document.getElementById('src')!.innerText = src)
     .then(() => document.getElementById('container')?.classList.add(`language-${spec.lang}`))
     .then(() => { if (spec.highlight) document.getElementById('container')?.classList.add(`line-highlight`) })
