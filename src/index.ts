@@ -12,24 +12,43 @@ import 'prismjs/plugins/normalize-whitespace/prism-normalize-whitespace'
 
 
 export const fetchCode = (rawUrl: string) => {
+    if (!rawUrl.startsWith('https://')) throw new Error('Only https:// URL are supported')
     return fetch(rawUrl)
         .then((res) => res.body?.getReader())
         .then((reader) => reader?.read())
         .then((data) => data && data.value && new TextDecoder().decode(data.value))
 }
 
-export const fetchTaggedCode = (rawUrl: string, tag: string) =>
-    fetchCode(rawUrl).then(extractTaggedCode(tag))
+export const fetchTaggedCode = (url: string, tag: string) =>
+    fetchCode(url).then(extractTaggedCode(tag))
 
-const cutOnEndTag = (tag: string) => (text: string) =>
-    text.substr(0, text.indexOf(`// [[end:${tag}]]`)).trim() // TODO: extract comment prefix into parameter
+
+const tagPattern = /\[\[(start|end):\w+\]\]/
+const tag = (type: ('start' | 'end'), classifier: string) => `[[${type}:${classifier}]]`
+const startTag = (classifier: string) => tag('start', classifier)
+const endTag = (classifier: string) => tag('end', classifier)
+
 
 const extractTaggedCode = (tag: string) => (text: string | undefined = '') => {
     return text
-        .split(`// [[start:${tag}]]`) // TODO: extract comment prefix into parameter
-        .slice(1)
-        .map(cutOnEndTag(tag))
-        .join('\n\n// [...]\n\n')
+        .split('\n')
+        .map(line => {
+            return {
+                text: line,
+                hasStartTag: line.includes(startTag(tag)),
+                hasEndTag: line.includes(endTag(tag))
+            }
+        })
+        .reduce((acc, line) => {
+            acc.open = (line.hasStartTag || (acc.open && !line.hasEndTag));
+            if (acc.open && !line.hasStartTag) acc.lines.push(line);
+            return acc
+        }, { open: false, lines: [] as {}[] })
+        .lines
+        //@ts-expect-error
+        .map(l => l.text)
+        .filter(line => !line.match(tagPattern))
+        .join('\n')
         || text
 }
 
@@ -52,5 +71,3 @@ fetchTaggedCode(spec.url, spec.tag)
     .then(() => { if (spec.highlight) document.getElementById('container')?.setAttribute('data-line', spec.highlight) })
     .then(() => Prism.highlightAll())
 
-    // or with section tag
-// fetchTaggedCode('https://raw.githubusercontent.com/actyx-contrib/react-pond/master/tsconfig.json', 'A').then(console.log)
