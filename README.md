@@ -34,6 +34,7 @@ In openEdX, simply use a `Raw HTML` unit and embed it either as iframe from a ho
 
 ### script
 
+[[start:embed-script]]
 Upload the script from `dist/` to your courses content. Afterwards you can use it anywhere in the course.
 
 In a `Raw HTML` unit,
@@ -56,11 +57,12 @@ In a `Raw HTML` unit,
         url: 'https://github.com/wwerner/highlight-embed/blob/main/README.md',
         lang: 'typescript',
         tag: 'foo',
-        highlight: '2,3-5',
+        highlight: '2,3-5'
     }
  )
 </script>
 ```
+[[start:embed-script]]
 
 #### iframe
 Simply use a `Raw HTML` block and embed the snippet using an iframe:
@@ -74,3 +76,5 @@ Simply use a `Raw HTML` block and embed the snippet using an iframe:
 * `yarn build` to build distribution package
 
 Pushing onto `main` triggers the build and deployment to the `gh-pages` branches root.
+
+To update the version used in openEdX, run `yarn build`, rename the JS and CSS output files to `embed.(css|js)` and upload them to the course's content.
