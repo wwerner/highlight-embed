@@ -10,16 +10,19 @@
 <body style="margin: 0;padding: 0;">
     <script src="./src/index.ts"></script>
     <div id="src-block"></div>
-    
+
     <script>
-     embedSnippet(
-        {
-            containerId: 'src-block',
-            url: 'https://github.com/wwerner/highlight-embed/blob/main/README.md',
-            lang: 'typescript',
-            tag: 'params',
-            highlight: '2,3-5'
-        })
+        const params = new URLSearchParams(window.location.search);
+
+        embedSnippet(
+            {
+                containerId: 'src-block',
+                url: params.get('url'),
+                lang: params.get('lang'),
+                tag: params.get('tag'),
+                highlight: params.get('highlight')
+            }
+        )
     </script>
 </body>
 
