@@ -66,9 +66,15 @@ In a `Raw HTML` unit,
 
 #### iframe
 Simply use a `Raw HTML` block and embed the snippet using an iframe:
+[[start:embed-iframe]]
 ```
-<iframe width='100%' height='350' src='https://wwerner.github.io/highlight-embed/?url=https://github.com/wwerner/highlight-embed/blob/main/README.md&lang=markdown&highlight=1,3-4&tag=params'></iframe>
+<iframe 
+    width='100%' 
+    height='350' 
+    src='https://wwerner.github.io/highlight-embed/?url=https://github.com/wwerner/highlight-embed/blob/main/README.md&lang=markdown&highlight=1,3-4&tag=params'>
+</iframe>
 ```
+[[end:embed-iframe]]
 
 ## Development
 
