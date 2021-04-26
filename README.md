@@ -35,6 +35,7 @@ In openEdX, simply use a `Raw HTML` unit and embed it either as iframe from a ho
 ### script
 
 [[start:embed-script]]
+
 Upload the script from `dist/` to your courses content. Afterwards you can use it anywhere in the course.
 
 In a `Raw HTML` unit,
@@ -62,11 +63,15 @@ In a `Raw HTML` unit,
  )
 </script>
 ```
-[[start:embed-script]]
+
+[[end:embed-script]]
 
 #### iframe
-Simply use a `Raw HTML` block and embed the snippet using an iframe:
+
 [[start:embed-iframe]]
+
+Simply use a `Raw HTML` block and embed the snippet using an iframe:
+
 ```
 <iframe 
     width='100%' 
@@ -74,6 +79,7 @@ Simply use a `Raw HTML` block and embed the snippet using an iframe:
     src='https://wwerner.github.io/highlight-embed/?url=https://github.com/wwerner/highlight-embed/blob/main/README.md&lang=markdown&highlight=1,3-4&tag=params'>
 </iframe>
 ```
+
 [[end:embed-iframe]]
 
 ## Development
