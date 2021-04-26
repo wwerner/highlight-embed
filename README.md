@@ -15,7 +15,8 @@ Will be transformed to the corresponding raw source URL (`https://raw.githubuser
 Note that `raw.githubusercontent` invalidates caches only every 5 minutes.
 
 * `lang` - The language used to parse and highlight the code.
-Currently, we support HTML, CSS, JS, TS, Markdown and Shell. To format a patch snippet, you need to use `diff-<language>`
+Currently, we support HTML, CSS, JS (`markup`) TS (`typescript`), Markdown (`markdown`), Bash/Shell (`shell`), Powershell (`powershell`) and diff (`diff`). To format a diff snippet, you need to use `diff-<language>`.
+
 
 * [optional] `tag` - The tag used for extracting parts of the source file. 
 Use `// [[start:<tag>]]`👆 and `// [[end:<tag>]]`👇 in a comment the source.  
