@@ -41,6 +41,7 @@ const extractTaggedCode = (tag: string) => (text: string | undefined = '') => {
         })
         .reduce((acc, line) => {
             acc.open = (line.hasStartTag || (acc.open && !line.hasEndTag));
+            if (line.hasStartTag && acc.lines.length) acc.lines.push({text: "\n...\n"});
             if (acc.open && !line.hasStartTag) acc.lines.push(line);
             return acc
         }, { open: false, lines: [] as {}[] })

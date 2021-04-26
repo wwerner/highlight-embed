@@ -22,11 +22,12 @@ Use `// [[start:<tag>]]`👆 and `// [[end:<tag>]]`👇 in a comment the source.
 
 * [optional] `highlight` - Line numbers to highlight. 
 Supports single lines (`5`), ranges (`1-3`) and combinations of those separated by `,` (`1, 2-4, 7`)
-// [[end:params]]
+// [[end:params]].
+If you use the same tag multiple times, the extracted snippets will be joined using `...`.
 
 Example: https://wwerner.github.io/highlight-embed/?url=https://github.com/wwerner/highlight-embed/blob/main/README.md&lang=markdown&highlight=1,3-4&tag=params
 
-### embedding in open edX
+### Embedding in open edX
 
 Simply use a `Raw HTML` block and embed the snippet using an iframe:
 ```
