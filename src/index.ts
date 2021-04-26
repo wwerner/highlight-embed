@@ -68,7 +68,6 @@ const spec = {
 fetchTaggedCode(spec.url, spec.tag)
     .then(src => document.getElementById('src')!.innerText = src)
     .then(() => document.getElementById('container')?.classList.add(`language-${spec.lang}`))
-    .then(() => { if (spec.highlight) document.getElementById('container')?.classList.add(`line-highlight`) })
-    .then(() => { if (spec.highlight) document.getElementById('container')?.setAttribute('data-line', spec.highlight) })
+    .then(() => { if (spec.highlight) document.getElementById('container')!.classList.add(`line-highlight`) })
+    .then(() => { if (spec.highlight) document.getElementById('container')!.setAttribute('data-line', spec.highlight) })
     .then(() => Prism.highlightAll())
-
