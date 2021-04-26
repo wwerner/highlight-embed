@@ -8,10 +8,19 @@
 </head>
 
 <body style="margin: 0;padding: 0;">
-    <pre id='container' class="line-numbers" style="white-space: pre-wrap;">
-            <code id='src' style="width: 100px; overflow-x: auto;white-space: pre-wrap;"></code>
-        </pre>
     <script src="./src/index.ts"></script>
+    <div id="src-block"></div>
+    
+    <script>
+     embedSnippet(
+        {
+            containerId: 'src-block',
+            url: 'https://github.com/wwerner/highlight-embed/blob/main/README.md',
+            lang: 'typescript',
+            tag: 'params',
+            highlight: '2,3-5'
+        })
+    </script>
 </body>
 
 </html>

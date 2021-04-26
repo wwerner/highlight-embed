@@ -28,8 +28,41 @@ If you use the same tag multiple times, the extracted snippets will be joined us
 
 Example: https://wwerner.github.io/highlight-embed/?url=https://github.com/wwerner/highlight-embed/blob/main/README.md&lang=markdown&highlight=1,3-4&tag=params
 
-### Embedding in open edX
+### Embedding
 
+In openEdX, simply use a `Raw HTML` unit and embed it either as iframe from a hosted version or include the script directly.
+
+### script
+
+Upload the script from `dist/` to your courses content. Afterwards you can use it anywhere in the course.
+
+In a `Raw HTML` unit,
+
+* add a `div` to include the snippet into
+* include the `embed.js` script
+* include the `embed.css` styles
+* define the params for the include
+* call `embed` with these params
+
+```
+<link rel="stylesheet" href="embed.css">
+<script src="embed.js"></script>
+<div id="src-block"></div>
+
+<script>
+ embedSnippet(
+    {
+        containerId: 'src-block',
+        url: 'https://github.com/wwerner/highlight-embed/blob/main/README.md',
+        lang: 'typescript',
+        tag: 'foo',
+        highlight: '2,3-5',
+    }
+ )
+</script>
+```
+
+#### iframe
 Simply use a `Raw HTML` block and embed the snippet using an iframe:
 ```
 <iframe width='100%' height='350' src='https://wwerner.github.io/highlight-embed/?url=https://github.com/wwerner/highlight-embed/blob/main/README.md&lang=markdown&highlight=1,3-4&tag=params'></iframe>
