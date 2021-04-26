@@ -4,7 +4,7 @@ import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-markdown';
 import 'prismjs/components/prism-diff';
 import 'prismjs/components/prism-powershell';
-import 'prismjs/themes/prism-solarizedlight.css'
+import 'prismjs/themes/prism.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.min'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import 'prismjs/plugins/line-highlight/prism-line-highlight'
