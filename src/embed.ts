@@ -24,7 +24,7 @@ export const fetchTaggedCode = (url: string, tag: string) =>
     fetchCode(url).then(extractTaggedCode(tag))
 
 
-const tagPattern = /\[\[(start|end):\w+\]\]/
+const tagPattern = /\[\[(start|end):[a-zA-Z0-9-_]+\]\]/
 const tag = (type: ('start' | 'end'), classifier: string) => `[[${type}:${classifier}]]`
 const startTag = (classifier: string) => tag('start', classifier)
 const endTag = (classifier: string) => tag('end', classifier)
